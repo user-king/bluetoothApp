@@ -1,0 +1,62 @@
+# .github/workflows/ci.yml
+
+name: React Native CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      bluetooth:
+        image: bluetooth-service-image:latest
+        ports:
+          - 12345:12345
+        options: >-
+          --cap-add=NET_ADMIN
+          --cap-add=SYS_ADMIN
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Run tests
+      - name: Run tests
+        run: npm test
+
+      # Run linting
+      - name: Run ESLint
+        run: npm run lint
+
+      # Build the app
+      - name: Build Android App
+        run: |
+          cd android
+          ./gradlew assembleDebug
+
+      # Notify user of success
+      - name: Success Notification
+        if: success()
+        run: echo "Build and tests passed successfully!"
+
+      # Notify user of failure
+      - name: Failure Notification
+        if: failure()
+        run: echo "Build or tests failed!"
+
