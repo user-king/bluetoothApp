@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { render, waitFor } from '@testing-library/react-native';
+// import '@testing-library/jest-native/extend-expect';
+
 import App from '../App'; // Your main app component
 
 jest.mock('react-native-ble-plx', () => {
