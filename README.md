@@ -1,79 +1,78 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+React Native Bluetooth Data Simulation App
 
-# Getting Started
+Overview
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+This project is a React Native mobile app that simulates connecting to a Bluetooth device, reading random numerical data, and displaying it in the app. The app can store data locally when offline and sync it to the cloud when connectivity is restored.
 
-## Step 1: Start the Metro Server
+Additionally, a CI/CD pipeline is set up using GitHub Actions to automate the build, testing, and deployment process.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+Features
 
-To start Metro, run the following command from the _root_ of your React Native project:
+Bluetooth Simulation: Simulates connecting to a BLE device and receiving random data.
+Offline Data Storage: Stores Bluetooth data locally and syncs it when online.
+CI/CD Pipeline: Automates building and testing the app on every push using GitHub Actions.
+Error Handling: Provides robust error handling and validation for Bluetooth connections and data.
 
-```bash
-# using npm
-npm start
+Prerequisites
+Before running the project, ensure you have the following installed on your machine:
 
-# OR using Yarn
-yarn start
-```
+Node.js: Download and install from https://nodejs.org.
+npm or yarn: Node.js package managers.
+React Native CLI: Install the React Native CLI to run the app on a physical device or simulator/emulator.
+Git: Version control system.
+Bluetooth Adapter: Ensure your system has a Bluetooth adapter that supports BLE peripheral mode (if testing on hardware).
 
-## Step 2: Start your Application
+Setup
+Follow these steps to set up the project on your local machine.
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+Clone the repository:
 
-### For Android
+1. git clone https://github.com/user-king/bluetoothApp.git
+ cd BluetoothApp
 
-```bash
-# using npm
-npm run android
+2. Install dependencies:
+yarn install
 
-# OR using Yarn
-yarn android
-```
+3. Install React Native environment:
+Follow the official React Native environment setup guide to install the necessary tools.
 
-### For iOS
+4. Running the App on Android Emulator or iOS Simulator:
+Android: 
+npx react-native run-android
 
-```bash
-# using npm
-npm run ios
+iOS: 
+npx react-native run-ios
 
-# OR using Yarn
-yarn ios
-```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+CI/CD Pipeline
+The project includes a basic CI/CD pipeline using GitHub Actions. This pipeline is triggered on every push to the main or develop branches and runs the following tasks:
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+1. Install dependencies.
+2. Build the app.
+3. Run automated tests.
+4. Notify the user of build success or failure.
 
-## Step 3: Modifying your App
 
-Now that you have successfully run the app, let's modify it.
+Setting up the CI/CD Pipeline
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+1. Ensure that your project is pushed to a GitHub repository.
+2. GitHub Actions will automatically run on every push to the main or develop branch, executing the pipeline described in .github/workflows/ci.yml.
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+Pipeline Configuration
+>The workflow is defined in the .github/workflows/ci.yml file.
+>It installs Node.js, runs tests, and builds the app.
+>If successful, a notification is sent via GitHub’s UI.
 
-## Congratulations! :tada:
 
-You've successfully run and modified your React Native App. :partying_face:
+Automated Tests
+The app includes a basic automated test to ensure that the Bluetooth simulation works as expected.
 
-### Now what?
+Running Tests
+To run the tests locally, use the following command:
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+npm test
 
-# Troubleshooting
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
