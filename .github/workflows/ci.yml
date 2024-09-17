@@ -1,5 +1,3 @@
-# .github/workflows/ci.yml
-
 name: React Native CI/CD
 
 on:
@@ -26,6 +24,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Cache Node modules
+      - name: Cache Node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Cache Gradle files (for Android builds)
+      - name: Cache Gradle
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: ${{ runner.os }}-gradle-
+
       # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -44,11 +61,19 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      # Build the app
+      # Build Android App
       - name: Build Android App
         run: |
           cd android
           ./gradlew assembleDebug
+
+      # (Optional) Build iOS App if using macOS
+      - name: Build iOS App
+        if: runner.os == 'macOS'
+        run: |
+          cd ios
+          pod install
+          xcodebuild -workspace YourApp.xcworkspace -scheme YourApp -sdk iphonesimulator -configuration Debug build
 
       # Notify user of success
       - name: Success Notification
@@ -59,4 +84,3 @@ jobs:
       - name: Failure Notification
         if: failure()
         run: echo "Build or tests failed!"
-
